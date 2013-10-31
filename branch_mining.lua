@@ -29,9 +29,10 @@ function dig(num)
   turtle.digUp()
   turtle.up()
   for i=1, num do
-    turtle.dig()
-    turtle.digDown()
-    turtle.forward()
+    while not turtle.forward() do
+      turtle.dig()
+      turtle.digDown()
+    end
   end
   turtle.digDown()
   turtle.down()
@@ -57,9 +58,10 @@ function dig_torch(num)
   turtle.up()
 
   for i=1, num do
-    turtle.dig()
-    turtle.digDown()
-    turtle.forward()
+    while not turtle.forward() do
+      turtle.dig()
+      turtle.digDown()
+    end
 
     if i == 2 then
       place_torch()

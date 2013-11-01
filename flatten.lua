@@ -7,7 +7,7 @@
 -- Imagine a cube in front of you, the turtle will start at the
 -- bottom-right-towards_you corner
 
-function line(steps)
+function safe_dig(steps)
   for i = 1, steps do
     while not turtle.forward() do
       turtle.dig()
@@ -16,56 +16,64 @@ function line(steps)
   end
 end
 
+function safe_dig_up(steps)
+  for i = 1, steps do
+    while not turtle.up() do
+      turtle.digUp()
+    end
+  end
+end
+
 function rotate(is_left)
   if is_left then
-    turtle.digUp()
     turtle.turnLeft()
-    turtle.dig()
-    turtle.forward()
+    safe_dig(1)
     turtle.turnLeft()
   else
-    turtle.digUp()
     turtle.turnRight()
-    turtle.dig()
-    turtle.forward()
+    safe_dig(1)
     turtle.turnRight()
   end
 end
 
 function flatten(x_, y_, z_)
   for i = 1, z_ do
+
+    -- dig fist two cake layers
     for j = 1, y_ do
-      line(x_)
+      safe_dig(x_)
       rotate(true)
-      line(x_)
+      safe_dig(x_)
       rotate(false)
     end
+
+    -- go up two floors
     turtle.turnRight()
-    turtle.forward()
+    safe_dig(1)
     turtle.turnLeft()
-    turtle.digUp()
-    turtle.up()
-    turtle.digUp()
-    turtle.up()
+    safe_dig_up(2)
+
+    -- dig second two cake layers
     for j = 1, y_ do
-      line(x_)
+      safe_dig(x_)
       rotate(false)
-      line(x_)
+      safe_dig(x_)
       rotate(true)
     end
+
+    -- go up two floors, ready to repeat pattern
     turtle.turnLeft()
-    turtle.forward()
+    safe_dig(1)
     turtle.turnRight()
-    turtle.digUp()
-    turtle.up()
-    turtle.digUp()
-    turtle.up()
+    safe_dig_up(2)
+
   end
 end
 
 
--- The division is in place to remember you that actions are duplicated The
+-- The division is in place to remember you that actions are duplicated. The
 -- first parameter is depth (towards your front),
 -- second width (towards your left) and
 -- third height (up).
-flatten(24, 8 /2, 12 /4)
+
+flatten(8, 8 /2, 8 /4)

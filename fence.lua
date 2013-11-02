@@ -4,7 +4,7 @@
 --
 -- Description:
 -- Will square an area with a 2 height wall of material
--- To your front and to your right
+-- To your front and to your left
 -- Originally for animal fences but can be used with other materials
 
 
@@ -56,5 +56,5 @@ end
 
 
 -- First parameter is towards your front
--- Second towards your right
+-- Second towards your left
 fence(4, 5)

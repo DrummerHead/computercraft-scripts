@@ -13,7 +13,9 @@
 
 
 -- Validate arguments from console
-if #arg > 2 then
+local arg = {...}
+
+if #arg >= 2 then
   for i = 1, #arg do
     assert(type(tonumber(arg[i])) == "number", "Argument must be a number")
   end
@@ -98,7 +100,7 @@ function branch_mining(length, corridors)
     turtle.turnLeft()
     dig(corridors * 3)
     turtle.turnLeft()
-    for j = 0, length do
+    for j = 1, length do
       turtle.forward()
     end
     turtle.turnLeft()
@@ -108,7 +110,7 @@ function branch_mining(length, corridors)
     turtle.turnRight()
     dig(corridors * 3)
     turtle.turnRight()
-    for j = 0, length do
+    for j = 1, length do
       turtle.forward()
     end
     turtle.turnRight()

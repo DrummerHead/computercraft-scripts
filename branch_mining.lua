@@ -6,10 +6,10 @@
 -- The branch_mining function will create branch mines
 -- of the specified lenght and corridor number
 -- branch_mining(length, corridors)
+-- The turtle will return to the point where it started
 --
 -- TODO:
--- Make bot return to original position
--- to avoid resting on lava or unknown material
+-- Avoid unnecesary turns while putting torches on ends
 
 
 -- Validate arguments from console
@@ -28,16 +28,12 @@ end
 
 -- Digs forward 1x2 num amount
 function dig(num)
-  turtle.digUp()
-  turtle.up()
   for i=1, num do
     while not turtle.forward() do
       turtle.dig()
-      turtle.digDown()
     end
+    turtle.digDown()
   end
-  turtle.digDown()
-  turtle.down()
 end
 
 
@@ -56,14 +52,11 @@ end
 function dig_torch(num)
   local step_torch = math.ceil(num / math.ceil(num / 12))
 
-  turtle.digUp()
-  turtle.up()
-
   for i=1, num do
     while not turtle.forward() do
       turtle.dig()
-      turtle.digDown()
     end
+    turtle.digDown()
 
     if i == 2 then
       place_torch()
@@ -74,13 +67,14 @@ function dig_torch(num)
   end
 
   place_torch()
-  turtle.digDown()
-  turtle.down()
 end
 
 
 -- Branch mines and then digs perimeter
 function branch_mining(length, corridors)
+  turtle.digUp()
+  turtle.up()
+
   for i=1, corridors do
     if i%2 == 0 then
       dig_torch(length)
@@ -100,22 +94,45 @@ function branch_mining(length, corridors)
     turtle.turnLeft()
     dig(corridors * 3)
     turtle.turnLeft()
+    turtle.down()
     for j = 1, length do
       turtle.forward()
     end
+    turtle.up()
     turtle.turnLeft()
     dig(corridors * 3)
+    turtle.turnLeft()
+    turtle.turnLeft()
+    for j = 1, corridors * 3 do
+      turtle.forward()
+    end
   else
     dig_torch(length)
     turtle.turnRight()
     dig(corridors * 3)
     turtle.turnRight()
+    turtle.down()
     for j = 1, length do
       turtle.forward()
     end
+    turtle.up()
     turtle.turnRight()
     dig(corridors * 3)
+    turtle.turnLeft()
+    turtle.turnLeft()
+    for j = 1, corridors * 3 do
+      turtle.forward()
+    end
+    turtle.down()
+    turtle.turnLeft()
+    for j = 1, length do
+      turtle.forward()
+    end
+    turtle.up()
   end
+
+  turtle.digDown()
+  turtle.down()
 end
 
 

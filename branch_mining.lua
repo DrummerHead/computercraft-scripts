@@ -8,8 +8,7 @@
 -- branch_mining(length, corridors)
 -- The turtle will return to the point where it started
 --
--- TODO:
--- Avoid unnecesary turns while putting torches on ends
+-- TODO: Conditional to avoid storing a specific material
 
 
 -- Validate arguments from console
@@ -137,4 +136,4 @@ end
 
 
 -- Execute Branch Mining
-branch_mining(arg[1], arg[2])
+branch_mining(tonumber(arg[1]), tonumber(arg[2]))

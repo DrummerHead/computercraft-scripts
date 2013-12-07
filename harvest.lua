@@ -84,4 +84,4 @@ function harvest(length)
   turtle.placeDown()
 end
 
-harvest(10)
+harvest(20)

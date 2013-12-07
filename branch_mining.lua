@@ -1,14 +1,19 @@
 -- Requirements: 
 -- Mining Turtle
 -- Put torches on slot 1
+-- Put undesired material on slot 16
 --
 -- Description:
 -- The branch_mining function will create branch mines
 -- of the specified lenght and corridor number
--- branch_mining(length, corridors)
--- The turtle will return to the point where it started
 --
--- TODO: Conditional to avoid storing a specific material
+-- Provide this number as attributes from console, e.g.:
+-- branch_mining.lua length corridors
+--
+-- The turtle will discard materials that match the one
+-- on slot 16.
+-- 
+-- The turtle will return to the point where it started
 
 
 -- Validate arguments from console
@@ -45,6 +50,16 @@ function place_torch()
   turtle.turnLeft()
 end
 
+-- Discard undesired materials
+function throw_unwanted()
+  for i=1, 15 do
+    turtle.select(i)
+    if turtle.compareTo(16) then
+      turtle.dropDown()
+    end
+  end
+  turtle.select(1)
+end
 
 -- Digs forward 1x2 num amount and places torch
 -- no further apart than 12 blocks
@@ -66,6 +81,7 @@ function dig_torch(num)
   end
 
   place_torch()
+  throw_unwanted()
 end
 
 

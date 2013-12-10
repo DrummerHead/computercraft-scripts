@@ -11,8 +11,8 @@ function line(length)
   for i = 2, length do
     while not turtle.forward() do
       turtle.dig()
-      turtle.digUp()
     end
+    turtle.digUp()
   end
 end
 

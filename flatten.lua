@@ -11,8 +11,8 @@ function safe_dig(steps)
   for i = 1, steps do
     while not turtle.forward() do
       turtle.dig()
-      turtle.digUp()
     end
+    turtle.digUp()
   end
 end
 

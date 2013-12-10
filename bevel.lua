@@ -7,12 +7,24 @@
 -- The turtle will beggin digging to towards your front and to your right
 
 
+local arg = {...}
+
+if #arg >= 2 then
+  for i = 1, #arg do
+    assert(type(tonumber(arg[i])) == "number", "Argument must be a number")
+  end
+else
+  print("You must enter at least two arguments")
+  print("First one: length of diggin")
+  print("Second one: amount steps")
+end
+
 function line(length)
   for i = 2, length do
+    turtle.digUp()
     while not turtle.forward() do
       turtle.dig()
     end
-    turtle.digUp()
   end
 end
 
@@ -26,7 +38,9 @@ function turn_around()
 end
 
 function change_stair()
-  turtle.down()
+  while not turtle.down() do
+    turtle.digDown()
+  end
   turtle.turnLeft()
   turtle.dig()
   turtle.forward()
@@ -42,6 +56,4 @@ function bevel(length, steps)
   end
 end
 
--- The first parameter is the length of diggin
--- Second is amount of steps
-bevel(40, 10)
+branch_mining(tonumber(arg[1]), tonumber(arg[2]))

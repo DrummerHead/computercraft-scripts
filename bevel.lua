@@ -56,4 +56,4 @@ function bevel(length, steps)
   end
 end
 
-branch_mining(tonumber(arg[1]), tonumber(arg[2]))
+bevel(tonumber(arg[1]), tonumber(arg[2]))

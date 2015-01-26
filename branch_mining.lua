@@ -1,6 +1,7 @@
 -- Requirements: 
 -- Mining Turtle
 -- Put torches on slot 1
+-- Put some cobblestone on slot 2 (16-32)
 --
 -- Description:
 -- The branch_mining function will create branch mines
@@ -11,6 +12,9 @@
 --
 -- The turtle will discard gravel, dirt and cobblestone
 -- to change this check throw_unwanted function
+--
+-- If there is water, lava or nothing above the turtle,
+-- Cobblestone will be placed above
 -- 
 -- The turtle will return to the point where it started
 
@@ -29,6 +33,29 @@ else
 end
 
 
+-- Puts cobblestone on top if lava, water or nothing
+function lava_water_space_prevention()
+  local inspectSuccess, inspectData = turtle.inspectUp()
+
+  -- just for debugging, delete when confortable
+  print(inspectSuccess)
+  if inspectSuccess then
+    print(inspectData.name)
+    print(inspectData.metadata)
+  end
+
+  if inspectSuccess == false or 
+  inspectData.name == 'minecraft:flowing_lava' or 
+  inspectData.name == 'minecraft:lava' or 
+  inspectData.name == 'minecraft:flowing_water' or
+  inspectData.name == 'minecraft:water' then
+    turtle.select(2)
+    turtle.placeUp()
+    turtle.select(1)
+  end
+end
+
+
 -- Digs forward 1x2 num amount
 function dig(num)
   for i=1, num do
@@ -36,6 +63,7 @@ function dig(num)
       turtle.dig()
     end
     turtle.digDown()
+    lava_water_space_prevention()
   end
 end
 
@@ -49,9 +77,10 @@ function place_torch()
   turtle.turnLeft()
 end
 
+
 -- Discard undesired materials
 function throw_unwanted()
-  for i=2, 16 do
+  for i=3, 16 do
     turtle.select(i)
     local itemDetail = turtle.getItemDetail()
     if itemDetail then
@@ -65,6 +94,7 @@ function throw_unwanted()
   turtle.select(1)
 end
 
+
 -- Digs forward 1x2 num amount and places torch
 -- no further apart than 12 blocks
 function dig_torch(num)
@@ -75,6 +105,7 @@ function dig_torch(num)
       turtle.dig()
     end
     turtle.digDown()
+    lava_water_space_prevention()
 
     if i == 2 then
       place_torch()

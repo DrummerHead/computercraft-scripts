@@ -1,5 +1,6 @@
 -- Requirements: 
--- Put material to carpet with in slot 16
+-- Fill turtle with desired material to carpet from slot 1 onwards
+-- The turtle will only use this material to carpet
 --
 -- Description:
 -- Cover a square area with the material of your choice.
@@ -8,10 +9,13 @@
 
 
 local slot = 1
+local carpetMaterial = turtle.getItemDetail(slot).name
 turtle.select(slot)
 
+print("used material will be " .. carpetMaterial)
+
 function ensure_material()
-  while turtle.getItemCount(slot) <= 0 or not turtle.compareTo(16) do
+  while turtle.getItemCount(slot) <= 0 or turtle.getItemDetail(slot).name ~= carpetMaterial do
     slot = slot + 1
     turtle.select(slot)
   end
@@ -63,4 +67,4 @@ end
 
 -- First parameter is distance away from you
 -- Second is distance to your left
-carpet(14 , 16 /2)
+carpet(24 , 8 /2)
